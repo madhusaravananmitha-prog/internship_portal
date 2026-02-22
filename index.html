@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Internship Portal - Government of India</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --navy: #000080;
+            --ashoka-blue: #000080;
+            --light-bg: #f5f5f5;
+            --border-color: #d4d4d4;
+            --text-dark: #333333;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+        }
+
+        body {
+            font-family: 'Lato', 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Government Header */
+        .gov-header {
+            background: linear-gradient(to bottom, var(--saffron) 0%, var(--saffron) 33.33%, var(--white) 33.33%, var(--white) 66.66%, var(--green) 66.66%, var(--green) 100%);
+            height: 8px;
+            width: 100%;
+        }
+
+        .main-header {
+            background: white;
+            border-bottom: 3px solid var(--ashoka-blue);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            background: var(--ashoka-blue);
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+
+        .header-top-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .emblem {
+            width: 70px;
+            height: 70px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="%23000080"/><circle cx="50" cy="50" r="40" fill="%23FFF"/><path d="M50 20 L55 45 L50 35 L45 45 Z" fill="%23000080"/><circle cx="50" cy="50" r="8" fill="%23000080"/></svg>') center/contain no-repeat;
+        }
+
+        .header-titles {
+            flex: 1;
+        }
+
+        .gov-name {
+            font-size: 1.1rem;
+            color: var(--ashoka-blue);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .portal-name {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            font-weight: 900;
+            margin-top: 0.3rem;
+            letter-spacing: -0.5px;
+        }
+
+        .portal-tagline {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background: var(--ashoka-blue);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 0;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            border-bottom-color: var(--saffron);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Login Page */
+        .login-page {
+            min-height: calc(100vh - 250px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .login-sidebar {
+            background: linear-gradient(135deg, var(--ashoka-blue) 0%, #000066 100%);
+            color: white;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-sidebar h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .login-sidebar ul {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .login-sidebar li {
+            padding: 0.8rem 0;
+            border-left: 3px solid var(--saffron);
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .login-form-area {
+            padding: 3rem;
+        }
+
+        .login-form-area h3 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .login-form-area p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-type-btn {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .user-type-btn:hover {
+            border-color: var(--ashoka-blue);
+        }
+
+        .user-type-btn.active {
+            background: var(--ashoka-blue);
+            color: white;
+            border-color: var(--ashoka-blue);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--ashoka-blue);
+            box-shadow: 0 0 0 3px rgba(0,0,128,0.1);
+        }
+
+        .btn {
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--ashoka-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #000066;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-link {
+            background: none;
+            color: var(--ashoka-blue);
+            text-decoration: underline;
+            padding: 0;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 2rem 0;
+        }
+
+        .breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: var(--ashoka-blue);
+            text-decoration: none;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--ashoka-blue);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card.saffron {
+            border-left-color: var(--saffron);
+        }
+
+        .stat-card.green {
+            border-left-color: var(--green);
+        }
+
+        .stat-card.info {
+            border-left-color: var(--info);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 4px;
+            border: 3px solid var(--border-color);
+            object-fit: cover;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-container {
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: var(--ashoka-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.3rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: white;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .skill-tag button:hover {
+            opacity: 1;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 4px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--light-bg);
+        }
+
+        .upload-area:hover {
+            border-color: var(--ashoka-blue);
+            background: white;
+        }
+
+        .upload-area.active {
+            border-color: var(--success);
+            background: rgba(40, 167, 69, 0.05);
+        }
+
+        /* Recommendations */
+        .recommendations-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .recommendation-card {
+            background: white;
+            border-radius: 4px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--ashoka-blue);
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(4px);
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .card-subtitle {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .match-badge {
+            background: var(--success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .matched-skills-section {
+            margin-top: 1rem;
+        }
+
+        .matched-skills-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .matched-skill {
+            display: inline-block;
+            background: rgba(19, 136, 8, 0.1);
+            color: var(--green);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin: 0.3rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(19, 136, 8, 0.3);
+        }
+
+        .card-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        .gov-footer {
+            background: var(--ashoka-blue);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0,0,128,0.1);
+            border-top: 4px solid var(--ashoka-blue);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+
+        .alert-info {
+            background: rgba(23, 162, 184, 0.1);
+            border-left: 4px solid var(--info);
+            color: var(--info);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        @media (max-width: 968px) {
+            .login-container {
+                grid-template-columns: 1fr;
+            }
+
+            .login-sidebar {
+                display: none;
+            }
+
+            .header-main {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--ashoka-blue);
+            border-bottom-color: var(--saffron);
+        }
+
+        .tab-btn:hover {
+            color: var(--ashoka-blue);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Sample Data
+        const sampleCandidates = [
+            {
+                id: 1,
+                name: "Priya Sharma",
+                email: "priya.sharma@email.com",
+                phone: "+91 98765 43210",
+                location: "Bangalore, Karnataka",
+                education: "BTech Computer Science, IIT Delhi",
+                gpa: "8.9/10",
+                skills: ["Product Analytics", "SQL", "Python", "User Research", "Agile", "Figma", "JIRA"],
+                experience: "Built a campus marketplace app with 5000+ users. Led product team of 5 members.",
+                certifications: ["Google Analytics Certified", "Scrum Master"],
+                expectedRole: "Product Management Intern",
+                resumeScore: 85,
+                linkedin: "linkedin.com/in/priyasharma",
+                github: "github.com/priyasharma",
+                portfolio: "priyasharma.dev",
+                availability: "Immediate",
+                workMode: "Hybrid",
+                expectedStipend: "25000-35000",
+                companySize: "Startup"
+            },
+            {
+                id: 2,
+                name: "Arjun Patel",
+                email: "arjun.patel@email.com",
+                phone: "+91 98765 43211",
+                location: "Mumbai, Maharashtra",
+                education: "MBA, IIM Ahmedabad",
+                gpa: "9.2/10",
+                skills: ["Market Research", "Product Strategy", "Data Analysis", "Excel", "Tableau", "A/B Testing", "Business Model Canvas"],
+                experience: "Led product initiatives for e-commerce startup. Increased user engagement by 40%.",
+                certifications: ["Product Management - Duke University", "Digital Marketing - Google"],
+                expectedRole: "Associate Product Manager",
+                resumeScore: 92,
+                linkedin: "linkedin.com/in/arjunpatel",
+                github: "github.com/arjunp",
+                portfolio: "arjunpatel.com",
+                availability: "2 weeks notice",
+                workMode: "Office",
+                expectedStipend: "35000-45000",
+                companySize: "Mid-size"
+            },
+            {
+                id: 3,
+                name: "Sneha Reddy",
+                email: "sneha.reddy@email.com",
+                phone: "+91 98765 43212",
+                location: "Hyderabad, Telangana",
+                education: "BTech Information Technology, BITS Pilani",
+                gpa: "8.5/10",
+                skills: ["UX Design", "Wireframing", "Product Analytics", "JavaScript", "React", "User Testing", "Adobe XD"],
+                experience: "Designed mobile app interface for fintech company. Improved user retention by 25%.",
+                certifications: ["UX Design - Google", "Product Design - Interaction Design Foundation"],
+                expectedRole: "Product Design Intern",
+                resumeScore: 78,
+                linkedin: "linkedin.com/in/snehareddy",
+                github: "github.com/snehareddy",
+                portfolio: "snehareddy.design",
+                availability: "1 month notice",
+                workMode: "Remote",
+                expectedStipend: "20000-30000",
+                companySize: "Any"
+            },
+            {
+                id: 4,
+                name: "Rahul Kumar",
+                email: "rahul.kumar@email.com",
+                phone: "+91 98765 43213",
+                location: "Delhi, NCR",
+                education: "BBA, Delhi University",
+                gpa: "8.7/10",
+                skills: ["Business Analytics", "Product Roadmap", "Jira", "Confluence", "SQL", "Customer Insights", "Market Analysis"],
+                experience: "Managed product launches for SaaS platform. Successfully launched 3 major features.",
+                certifications: ["Business Analytics - IIM Bangalore", "Agile Methodologies"],
+                expectedRole: "Product Management Intern",
+                resumeScore: 88,
+                linkedin: "linkedin.com/in/rahulkumar",
+                github: "github.com/rahulk",
+                portfolio: "rahulkumar.in",
+                availability: "Immediate",
+                workMode: "Hybrid",
+                expectedStipend: "28000-38000",
+                companySize: "Large Enterprise"
+            },
+            {
+                id: 5,
+                name: "Ananya Iyer",
+                email: "ananya.iyer@email.com",
+                phone: "+91 98765 43214",
+                location: "Bangalore, Karnataka",
+                education: "MSc Data Science, ISI Bangalore",
+                gpa: "9.0/10",
+                skills: ["Machine Learning", "Python", "Data Visualization", "Product Metrics", "R", "Statistics", "TensorFlow"],
+                experience: "Built recommendation system for content platform. Improved content discovery by 35%.",
+                certifications: ["Machine Learning - Stanford", "Deep Learning - Coursera"],
+                expectedRole: "Data Product Intern",
+                resumeScore: 90,
+                linkedin: "linkedin.com/in/ananyaiyer",
+                github: "github.com/ananyaiyer",
+                portfolio: "ananyaiyer.ai",
+                availability: "2 weeks notice",
+                workMode: "Remote",
+                expectedStipend: "30000-40000",
+                companySize: "Startup"
+            }
+        ];
+
+        const sampleInternships = [
+            {
+                id: 1,
+                company: "TechCorp Solutions Pvt. Ltd.",
+                logo: "🏢",
+                role: "Product Management Intern",
+                location: "Bangalore, Karnataka",
+                duration: "3 months",
+                stipend: "₹30,000/month",
+                openings: 3,
+                requiredSkills: ["Product Analytics", "SQL", "Agile", "User Research"],
+                description: "Work on B2B SaaS product features and user analytics. Collaborate with engineering and design teams.",
+                posted: "2 days ago",
+                deadline: "15 days",
+                workMode: "Hybrid",
+                companySize: "Startup (50-200)",
+                industry: "SaaS",
+                benefits: ["Health Insurance", "Flexible Hours", "Learning Budget", "Free Meals"],
+                interviewProcess: "Resume Screening → Assignment → 2 Rounds Interview",
+                mentorship: "Yes - Weekly 1:1 with Senior PM"
+            },
+            {
+                id: 2,
+                company: "StartupHub India",
+                logo: "🚀",
+                role: "Associate Product Manager",
+                location: "Mumbai, Maharashtra",
+                duration: "6 months",
+                stipend: "₹40,000/month",
+                openings: 2,
+                requiredSkills: ["Product Strategy", "Market Research", "Data Analysis", "A/B Testing"],
+                description: "Drive product strategy for consumer fintech app. Own features end-to-end from conception to launch.",
+                posted: "5 days ago",
+                deadline: "20 days",
+                workMode: "Office",
+                companySize: "Mid-size (200-500)",
+                industry: "Fintech",
+                benefits: ["Performance Bonus", "Stock Options", "Health Insurance", "Team Outings"],
+                interviewProcess: "Phone Screen → Case Study → Panel Interview",
+                mentorship: "Yes - Mentorship from VP Product"
+            },
+            {
+                id: 3,
+                company: "InnovateLabs Technologies",
+                logo: "💡",
+                role: "Product Design Intern",
+                location: "Hyderabad, Telangana",
+                duration: "4 months",
+                stipend: "₹25,000/month",
+                openings: 4,
+                requiredSkills: ["UX Design", "Figma", "Wireframing", "User Testing"],
+                description: "Design user experiences for healthcare platform. Conduct user research and create prototypes.",
+                posted: "1 week ago",
+                deadline: "10 days",
+                workMode: "Remote",
+                companySize: "Startup (20-50)",
+                industry: "Healthcare",
+                benefits: ["Work from Home", "Flexible Hours", "Design Tools Subscription"],
+                interviewProcess: "Portfolio Review → Design Challenge → Interview",
+                mentorship: "Yes - Design Lead as mentor"
+            },
+            {
+                id: 4,
+                company: "DataDrive Analytics Ltd.",
+                logo: "📊",
+                role: "Data Product Intern",
+                location: "Bangalore, Karnataka",
+                duration: "3 months",
+                stipend: "₹35,000/month",
+                openings: 2,
+                requiredSkills: ["Python", "Machine Learning", "Data Visualization", "SQL"],
+                description: "Build data-driven product features and analytics dashboards. Work with ML models.",
+                posted: "3 days ago",
+                deadline: "12 days",
+                workMode: "Hybrid",
+                companySize: "Large (500+)",
+                industry: "Analytics",
+                benefits: ["Health Insurance", "Learning Budget", "Gym Membership", "Transport"],
+                interviewProcess: "Coding Test → Technical Interview → HR Round",
+                mentorship: "Yes - Senior Data Scientist mentorship"
+            },
+            {
+                id: 5,
+                company: "EdTech Masters India",
+                logo: "📚",
+                role: "Product Management Intern",
+                location: "Delhi, NCR",
+                duration: "6 months",
+                stipend: "₹28,000/month",
+                openings: 5,
+                requiredSkills: ["Product Roadmap", "User Research", "Agile", "SQL"],
+                description: "Manage education platform features and student engagement. Drive feature adoption.",
+                posted: "1 day ago",
+                deadline: "25 days",
+                workMode: "Office",
+                companySize: "Mid-size (200-500)",
+                industry: "EdTech",
+                benefits: ["Free Courses", "Health Insurance", "Team Events", "Career Growth"],
+                interviewProcess: "Application → Product Sense Interview → Final Round",
+                mentorship: "Yes - Product leadership mentorship"
+            },
+            {
+                id: 6,
+                company: "CloudScale Systems",
+                logo: "☁️",
+                role: "Technical Product Manager Intern",
+                location: "Pune, Maharashtra",
+                duration: "4 months",
+                stipend: "₹32,000/month",
+                openings: 3,
+                requiredSkills: ["API Design", "SQL", "Product Analytics", "Agile"],
+                description: "Work on cloud infrastructure products and developer tools. Technical PM role.",
+                posted: "4 days ago",
+                deadline: "18 days",
+                workMode: "Hybrid",
+                companySize: "Large (500+)",
+                industry: "Cloud Computing",
+                benefits: ["Stock Options", "Health Insurance", "Learning Budget", "Conferences"],
+                interviewProcess: "Technical Assessment → Product Round → Leadership Interview",
+                mentorship: "Yes - Engineering + Product mentorship"
+            }
+        ];
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('login');
+            const [userType, setUserType] = useState('candidate');
+            const [isLoggedIn, setIsLoggedIn] = useState(false);
+            const [currentUser, setCurrentUser] = useState(null);
+            const [activeTab, setActiveTab] = useState('profile');
+            
+            const [loginData, setLoginData] = useState({
+                email: '',
+                password: '',
+                userType: 'candidate'
+            });
+
+            const [candidateData, setCandidateData] = useState({
+                name: '',
+                email: '',
+                phone: '',
+                location: '',
+                education: '',
+                gpa: '',
+                skills: [],
+                experience: '',
+                certifications: [],
+                expectedRole: '',
+                linkedin: '',
+                github: '',
+                portfolio: '',
+                availability: '',
+                workMode: '',
+                expectedStipend: '',
+                companySize: '',
+                profilePicture: null
+            });
+
+            const [internshipData, setInternshipData] = useState({
+                company: '',
+                role: '',
+                location: '',
+                duration: '',
+                stipend: '',
+                openings: '',
+                requiredSkills: [],
+                description: '',
+                deadline: '',
+                workMode: '',
+                companySize: '',
+                industry: '',
+                benefits: [],
+                interviewProcess: '',
+                mentorship: ''
+            });
+
+            const [currentSkill, setCurrentSkill] = useState('');
+            const [currentCert, setCurrentCert] = useState('');
+            const [currentBenefit, setCurrentBenefit] = useState('');
+            const [recommendations, setRecommendations] = useState([]);
+            const [loading, setLoading] = useState(false);
+            const [resumeFile, setResumeFile] = useState(null);
+            const [resumeAnalysis, setResumeAnalysis] = useState(null);
+            const fileInputRef = useRef(null);
+            const profilePicRef = useRef(null);
+
+            const [filters, setFilters] = useState({
+                location: '',
+                workMode: '',
+                stipendRange: '',
+                sortBy: 'matchScore'
+            });
+
+            const handleLogin = (e) => {
+                e.preventDefault();
+                // Simulate login
+                setIsLoggedIn(true);
+                setUserType(loginData.userType);
+                setCurrentUser({
+                    name: loginData.userType === 'candidate' ? 'User' : 'Company Representative',
+                    email: loginData.email
+                });
+                setCurrentPage('dashboard');
+            };
+
+            const handleLogout = () => {
+                setIsLoggedIn(false);
+                setCurrentUser(null);
+                setCurrentPage('login');
+                setRecommendations([]);
+                setResumeAnalysis(null);
+            };
+
+            const handleSkillAdd = (e, type) => {
+                if (e.key === 'Enter' && currentSkill.trim()) {
+                    e.preventDefault();
+                    if (type === 'candidate') {
+                        setCandidateData({
+                            ...candidateData,
+                            skills: [...candidateData.skills, currentSkill.trim()]
+                        });
+                    } else {
+                        setInternshipData({
+                            ...internshipData,
+                            requiredSkills: [...internshipData.requiredSkills, currentSkill.trim()]
+                        });
+                    }
+                    setCurrentSkill('');
+                }
+            };
+
+            const handleCertAdd = (e) => {
+                if (e.key === 'Enter' && currentCert.trim()) {
+                    e.preventDefault();
+                    setCandidateData({
+                        ...candidateData,
+                        certifications: [...candidateData.certifications, currentCert.trim()]
+                    });
+                    setCurrentCert('');
+                }
+            };
+
+            const handleBenefitAdd = (e) => {
+                if (e.key === 'Enter' && currentBenefit.trim()) {
+                    e.preventDefault();
+                    setInternshipData({
+                        ...internshipData,
+                        benefits: [...internshipData.benefits, currentBenefit.trim()]
+                    });
+                    setCurrentBenefit('');
+                }
+            };
+
+            const removeSkill = (skillToRemove, type) => {
+                if (type === 'candidate') {
+                    setCandidateData({
+                        ...candidateData,
+                        skills: candidateData.skills.filter(s => s !== skillToRemove)
+                    });
+                } else {
+                    setInternshipData({
+                        ...internshipData,
+                        requiredSkills: internshipData.requiredSkills.filter(s => s !== skillToRemove)
+                    });
+                }
+            };
+
+            const removeCert = (certToRemove) => {
+                setCandidateData({
+                    ...candidateData,
+                    certifications: candidateData.certifications.filter(c => c !== certToRemove)
+                });
+            };
+
+            const removeBenefit = (benefitToRemove) => {
+                setInternshipData({
+                    ...internshipData,
+                    benefits: internshipData.benefits.filter(b => b !== benefitToRemove)
+                });
+            };
+
+            const handleFileUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    setResumeFile(file);
+                    analyzeResume(file);
+                }
+            };
+
+            const handleProfilePicUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        setCandidateData({
+                            ...candidateData,
+                            profilePicture: reader.result
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            const analyzeResume = async (file) => {
+                setLoading(true);
+                setTimeout(() => {
+                    const analysis = {
+                        score: Math.floor(Math.random() * 20) + 75,
+                        skillsExtracted: ["Product Analytics", "SQL", "Python", "Agile", "User Research"],
+                        experienceYears: Math.floor(Math.random() * 3) + 1,
+                        matchQuality: "High",
+                        certifications: ["Google Analytics", "Scrum Master"]
+                    };
+                    setResumeAnalysis(analysis);
+                    
+                    setCandidateData(prev => ({
+                        ...prev,
+                        skills: [...new Set([...prev.skills, ...analysis.skillsExtracted])],
+                        certifications: [...new Set([...prev.certifications, ...analysis.certifications])]
+                    }));
+                    
+                    setLoading(false);
+                }, 1500);
+            };
+
+            const calculateMatchScore = (candidate, internship) => {
+                const skillsMatch = candidate.skills.filter(skill => 
+                    internship.requiredSkills.some(req => 
+                        req.toLowerCase().includes(skill.toLowerCase()) ||
+                        skill.toLowerCase().includes(req.toLowerCase())
+                    )
+                ).length;
+                
+                const locationMatch = candidate.location.split(',')[0].toLowerCase() === 
+                                     internship.location.split(',')[0].toLowerCase() ? 15 : 0;
+                
+                const workModeMatch = candidate.workMode === internship.workMode ? 10 : 0;
+                
+                const skillScore = (skillsMatch / Math.max(internship.requiredSkills.length, 1)) * 50;
+                const experienceBonus = candidate.experience ? 15 : 5;
+                const certBonus = candidate.certifications.length > 0 ? 10 : 0;
+                
+                return Math.min(Math.round(skillScore + locationMatch + workModeMatch + experienceBonus + certBonus), 100);
+            };
+
+            const getRecommendations = () => {
+                setLoading(true);
+                
+                setTimeout(() => {
+                    if (userType === 'candidate') {
+                        let scored = sampleInternships.map(internship => ({
+                            ...internship,
+                            matchScore: calculateMatchScore(candidateData, internship),
+                            matchedSkills: candidateData.skills.filter(skill =>
+                                internship.requiredSkills.some(req =>
+                                    req.toLowerCase().includes(skill.toLowerCase()) ||
+                                    skill.toLowerCase().includes(req.toLowerCase())
+                                )
+                            )
+                        }));
+
+                        // Apply filters
+                        if (filters.location) {
+                            scored = scored.filter(item => 
+                                item.location.toLowerCase().includes(filters.location.toLowerCase())
+                            );
+                        }
+                        if (filters.workMode) {
+                            scored = scored.filter(item => item.workMode === filters.workMode);
+                        }
+
+                        // Sort
+                        if (filters.sortBy === 'matchScore') {
+                            scored.sort((a, b) => b.matchScore - a.matchScore);
+                        } else if (filters.sortBy === 'stipend') {
+                            scored.sort((a, b) => {
+                                const aStipend = parseInt(a.stipend.replace(/[^0-9]/g, ''));
+                                const bStipend = parseInt(b.stipend.replace(/[^0-9]/g, ''));
+                                return bStipend - aStipend;
+                            });
+                        } else if (filters.sortBy === 'deadline') {
+                            scored.sort((a, b) => parseInt(a.deadline) - parseInt(b.deadline));
+                        }
+                        
+                        setRecommendations(scored);
+                    } else {
+                        let scored = sampleCandidates.map(candidate => ({
+                            ...candidate,
+                            matchScore: calculateMatchScore(candidate, internshipData),
+                            matchedSkills: candidate.skills.filter(skill =>
+                                internshipData.requiredSkills.some(req =>
+                                    req.toLowerCase().includes(skill.toLowerCase()) ||
+                                    skill.toLowerCase().includes(req.toLowerCase())
+                                )
+                            )
+                        }));
+
+                        // Apply filters
+                        if (filters.location) {
+                            scored = scored.filter(item => 
+                                item.location.toLowerCase().includes(filters.location.toLowerCase())
+                            );
+                        }
+                        if (filters.workMode) {
+                            scored = scored.filter(item => item.workMode === filters.workMode);
+                        }
+
+                        // Sort
+                        scored.sort((a, b) => b.matchScore - a.matchScore);
+                        
+                        setRecommendations(scored);
+                    }
+                    
+                    setLoading(false);
+                    setActiveTab('recommendations');
+                }, 1000);
+            };
+
+            const isFormValid = () => {
+                if (userType === 'candidate') {
+                    return candidateData.name && candidateData.location && candidateData.skills.length > 0;
+                } else {
+                    return internshipData.company && internshipData.role && 
+                           internshipData.location && internshipData.requiredSkills.length > 0;
+                }
+            };
+
+            // Statistics
+            const stats = {
+                totalInternships: 6,
+                activeApplications: userType === 'candidate' ? 3 : 0,
+                profileViews: 124,
+                matchRate: 85
+            };
+
+            if (!isLoggedIn) {
+                return (
+                    <div>
+                        <div className="gov-header"></div>
+                        <div className="main-header">
+                            <div className="header-top">
+                                <div className="header-top-content">
+                                    <span>🇮🇳 भारत सरकार | Government of India</span>
+                                    <span>National Internship Portal</span>
+                                </div>
+                            </div>
+                            <div className="header-main">
+                                <div className="emblem"></div>
+                                <div className="header-titles">
+                                    <div className="gov-name">Ministry of Skill Development & Entrepreneurship</div>
+                                    <h1 className="portal-name">National Internship Portal</h1>
+                                    <p className="portal-tagline">राष्ट्रीय इंटर्नशिप पोर्टल</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="login-page">
+                            <div className="login-container">
+                                <div className="login-sidebar">
+                                    <h2>Welcome to National Internship Portal</h2>
+                                    <p>Connecting India's brightest minds with leading organizations</p>
+                                    <ul>
+                                        <li>✓ Access to 10,000+ verified internship opportunities</li>
+                                        <li>✓ Smart AI-powered matching algorithm</li>
+                                        <li>✓ Resume analysis and skill assessment</li>
+                                        <li>✓ Direct connection with hiring managers</li>
+                                        <li>✓ Government-backed certification</li>
+                                    </ul>
+                                </div>
+                                <div className="login-form-area">
+                                    <h3>Login to Continue</h3>
+                                    <p>Enter your credentials to access the portal</p>
+                                    
+                                    <div className="user-type-selector">
+                                        <button 
+                                            className={`user-type-btn ${loginData.userType === 'candidate' ? 'active' : ''}`}
+                                            onClick={() => setLoginData({...loginData, userType: 'candidate'})}
+                                        >
+                                            👤 Candidate
+                                        </button>
+                                        <button 
+                                            className={`user-type-btn ${loginData.userType === 'company' ? 'active' : ''}`}
+                                            onClick={() => setLoginData({...loginData, userType: 'company'})}
+                                        >
+                                            🏢 Employer
+                                        </button>
+                                    </div>
+
+                                    <form onSubmit={handleLogin}>
+                                        <div className="form-group">
+                                            <label>Email Address / Username</label>
+                                            <input 
+                                                type="email"
+                                                value={loginData.email}
+                                                onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                                                placeholder="Enter your email"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Password</label>
+                                            <input 
+                                                type="password"
+                                                value={loginData.password}
+                                                onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                                                placeholder="Enter your password"
+                                                required
+                                            />
+                                        </div>
+                                        <div className="checkbox-group" style={{marginBottom: '1.5rem'}}>
+                                            <input type="checkbox" id="remember" />
+                                            <label htmlFor="remember" style={{marginBottom: 0, fontWeight: 'normal'}}>Remember me</label>
+                                        </div>
+                                        <button type="submit" className="btn btn-primary" style={{width: '100%', marginBottom: '1rem'}}>
+                                            Login to Portal
+                                        </button>
+                                        <div style={{textAlign: 'center'}}>
+                                            <button type="button" className="btn btn-link">Forgot Password?</button>
+                                            <span> | </span>
+                                            <button type="button" className="btn btn-link">New User? Register</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="gov-footer">
+                            <div className="footer-content">
+                                <div className="footer-links">
+                                    <a href="#">About Us</a>
+                                    <a href="#">Contact</a>
+                                    <a href="#">Terms & Conditions</a>
+                                    <a href="#">Privacy Policy</a>
+                                    <a href="#">Help & Support</a>
+                                    <a href="#">Accessibility</a>
+                                </div>
+                                <p style={{marginTop: '1rem', fontSize: '0.9rem'}}>
+                                    © 2026 Government of India. All Rights Reserved.<br/>
+                                    Last Updated: February 03, 2026 | Version 2.0
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div>
+                    <div className="gov-header"></div>
+                    <div className="main-header">
+                        <div className="header-top">
+                            <div className="header-top-content">
+                                <span>🇮🇳 भारत सरकार | Government of India</span>
+                                <span>Welcome, {currentUser.name} | <button onClick={handleLogout} style={{background: 'none', border: 'none', color: 'white', cursor: 'pointer', textDecoration: 'underline'}}>Logout</button></span>
+                            </div>
+                        </div>
+                        <div className="header-main">
+                            <div className="emblem"></div>
+                            <div className="header-titles">
+                                <div className="gov-name">Ministry of Skill Development & Entrepreneurship</div>
+                                <h1 className="portal-name">National Internship Portal</h1>
+                                <p className="portal-tagline">राष्ट्रीय इंटर्नशिप पोर्टल</p>
+                            </div>
+                        </div>
+                        <nav className="main-nav">
+                            <div className="nav-content">
+                                <a href="#" className="nav-link active">Dashboard</a>
+                                <a href="#" className="nav-link">Browse {userType === 'candidate' ? 'Internships' : 'Candidates'}</a>
+                                <a href="#" className="nav-link">My Applications</a>
+                                <a href="#" className="nav-link">Messages</a>
+                                <a href="#" className="nav-link">Resources</a>
+                                <a href="#" className="nav-link">Help</a>
+                            </div>
+                        </nav>
+                    </div>
+
+                    <div className="container">
+                        <div className="breadcrumb">
+                            <a href="#">Home</a> / <a href="#">Dashboard</a> / {activeTab === 'profile' ? 'Profile' : 'Recommendations'}
+                        </div>
+
+                        <div className="dashboard">
+                            <div className="page-header">
+                                <h1 className="page-title">
+                                    {userType === 'candidate' ? 'Candidate Dashboard' : 'Employer Dashboard'}
+                                </h1>
+                            </div>
+
+                            <div className="stats-grid">
+                                <div className="stat-card">
+                                    <div className="stat-value">{stats.totalInternships}</div>
+                                    <div className="stat-label">{userType === 'candidate' ? 'Available Internships' : 'Active Job Posts'}</div>
+                                </div>
+                                <div className="stat-card saffron">
+                                    <div className="stat-value">{stats.activeApplications}</div>
+                                    <div className="stat-label">{userType === 'candidate' ? 'Active Applications' : 'Candidates Shortlisted'}</div>
+                                </div>
+                                <div className="stat-card green">
+                                    <div className="stat-value">{stats.profileViews}</div>
+                                    <div className="stat-label">Profile Views</div>
+                                </div>
+                                <div className="stat-card info">
+                                    <div className="stat-value">{stats.matchRate}%</div>
+                                    <div className="stat-label">Match Success Rate</div>
+                                </div>
+                            </div>
+
+                            <div className="tab-navigation">
+                                <button 
+                                    className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('profile')}
+                                >
+                                    📝 {userType === 'candidate' ? 'My Profile' : 'Job Posting'}
+                                </button>
+                                <button 
+                                    className={`tab-btn ${activeTab === 'recommendations' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('recommendations')}
+                                >
+                                    🎯 {userType === 'candidate' ? 'Recommended Internships' : 'Recommended Candidates'}
+                                </button>
+                            </div>
+
+                            {activeTab === 'profile' && (
+                                <>
+                                    {userType === 'candidate' ? (
+                                        <div>
+                                            {resumeAnalysis && (
+                                                <div className="alert alert-success">
+                                                    ✅ Resume analyzed successfully! Score: {resumeAnalysis.score}% | {resumeAnalysis.skillsExtracted.length} skills extracted | Match Quality: {resumeAnalysis.matchQuality}
+                                                </div>
+                                            )}
+
+                                            <div className="profile-section">
+                                                <div className="section-header">
+                                                    <h2 className="section-title">Resume Upload & Analysis</h2>
+                                                </div>
+                                                <input 
+                                                    type="file" 
+                                                    ref={fileInputRef}
+                                                    onChange={handleFileUpload}
+                                                    accept=".pdf,.doc,.docx"
+                                                />
+                                                <div 
+                                                    className={`upload-area ${resumeFile ? 'active' : ''}`}
+                                                    onClick={() => fileInputRef.current.click()}
+                                                >
+                                                    <div style={{fontSize: '2.5rem', marginBottom: '0.5rem'}}>
+                                                        {resumeFile ? '✅' : '📄'}
+                                                    </div>
+                                                    <h3>{resumeFile ? `Uploaded: ${resumeFile.name}` : 'Click to Upload Resume'}</h3>
+                                                    <p>{resumeFile ? 'Click to change file' : 'Supported: PDF, DOC, DOCX (Max 5MB)'}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="profile-section">
+                                                <div className="section-header">
+                                                    <h2 className="section-title">Personal Information</h2>
+                                                </div>
+                                                
+                                                <div className="profile-header">
+                                                    <div className="profile-picture">
+                                                        {candidateData.profilePicture ? (
+                                                            <img src={candidateData.profilePicture} alt="Profile" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+                                                        ) : (
+                                                            '👤'
+                                                        )}
+                                                    </div>
+                                                    <div className="profile-info">
+                                                        <input 
+                                                            type="file" 
+                                                            ref={profilePicRef}
+                                                            onChange={handleProfilePicUpload}
+                                                            accept="image/*"
+                                                        />
+                                                        <button 
+                                                            className="btn btn-secondary"
+                                                            onClick={() => profilePicRef.current.click()}
+                                                        >
+                                                            Upload Profile Picture
+                                                        </button>
+                                                        <p style={{marginTop: '0.5rem', fontSize: '0.85rem', color: '#666'}}>
+                                                            JPG, PNG or GIF (Max 2MB)
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Full Name *</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={candidateData.name}
+                                                            onChange={(e) => setCandidateData({...candidateData, name: e.target.value})}
+                                                            placeholder="Enter your full name"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Email Address *</label>
+                                                        <input 
+                                                            type="email"
+                                                            value={candidateData.email}
+                                                            onChange={(e) => setCandidateData({...candidateData, email: e.target.value})}
+                                                            placeholder="your.email@example.com"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Phone Number *</label>
+                                                        <input 
+                                                            type="tel"
+                                                            value={candidateData.phone}
+                                                            onChange={(e) => setCandidateData({...candidateData, phone: e.target.value})}
+                                                            placeholder="+91 XXXXX XXXXX"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Current Location *</label>
+                                                        <select 
+                                                            value={candidateData.location}
+                                                            onChange={(e) => setCandidateData({...candidateData, location: e.target.value})}
+                                                        >
+                                                            <option value="">Select location</option>
+                                                            <option value="Bangalore, Karnataka">Bangalore, Karnataka</option>
+                                                            <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
+                                                            <option value="Delhi, NCR">Delhi, NCR</option>
+                                                            <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
+                                                            <option value="Pune, Maharashtra">Pune, Maharashtra</option>
+                                                            <option value="Chennai, Tamil Nadu">Chennai, Tamil Nadu</option>
+                                                            <option value="Kolkata, West Bengal">Kolkata, West Bengal</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Education</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={candidateData.education}
+                                                            onChange={(e) => setCandidateData({...candidateData, education: e.target.value})}
+                                                            placeholder="e.g., BTech CSE, IIT Delhi"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>GPA / Percentage</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={candidateData.gpa}
+                                                            onChange={(e) => setCandidateData({...candidateData, gpa: e.target.value})}
+                                                            placeholder="e.g., 8.5/10 or 85%"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Availability</label>
+                                                        <select 
+                                                            value={candidateData.availability}
+                                                            onChange={(e) => setCandidateData({...candidateData, availability: e.target.value})}
+                                                        >
+                                                            <option value="">Select availability</option>
+                                                            <option value="Immediate">Immediate</option>
+                                                            <option value="2 weeks notice">2 weeks notice</option>
+                                                            <option value="1 month notice">1 month notice</option>
+                                                            <option value="After semester">After semester</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Preferred Work Mode</label>
+                                                        <select 
+                                                            value={candidateData.workMode}
+                                                            onChange={(e) => setCandidateData({...candidateData, workMode: e.target.value})}
+                                                        >
+                                                            <option value="">Select work mode</option>
+                                                            <option value="Office">Office</option>
+                                                            <option value="Remote">Remote</option>
+                                                            <option value="Hybrid">Hybrid</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Expected Stipend (₹/month)</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={candidateData.expectedStipend}
+                                                            onChange={(e) => setCandidateData({...candidateData, expectedStipend: e.target.value})}
+                                                            placeholder="e.g., 25000-35000"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Preferred Company Size</label>
+                                                        <select 
+                                                            value={candidateData.companySize}
+                                                            onChange={(e) => setCandidateData({...candidateData, companySize: e.target.value})}
+                                                        >
+                                                            <option value="">Select preference</option>
+                                                            <option value="Startup">Startup (1-50)</option>
+                                                            <option value="Mid-size">Mid-size (50-500)</option>
+                                                            <option value="Large Enterprise">Large Enterprise (500+)</option>
+                                                            <option value="Any">Any</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Expected Role</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={candidateData.expectedRole}
+                                                            onChange={(e) => setCandidateData({...candidateData, expectedRole: e.target.value})}
+                                                            placeholder="e.g., Product Management Intern"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Skills * (Press Enter to add)</label>
+                                                    <input 
+                                                        type="text"
+                                                        value={currentSkill}
+                                                        onChange={(e) => setCurrentSkill(e.target.value)}
+                                                        onKeyPress={(e) => handleSkillAdd(e, 'candidate')}
+                                                        placeholder="Type a skill and press Enter"
+                                                    />
+                                                    <div className="skills-container">
+                                                        {candidateData.skills.map((skill, idx) => (
+                                                            <span key={idx} className="skill-tag">
+                                                                {skill}
+                                                                <button onClick={() => removeSkill(skill, 'candidate')}>×</button>
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Certifications (Press Enter to add)</label>
+                                                    <input 
+                                                        type="text"
+                                                        value={currentCert}
+                                                        onChange={(e) => setCurrentCert(e.target.value)}
+                                                        onKeyPress={handleCertAdd}
+                                                        placeholder="Type a certification and press Enter"
+                                                    />
+                                                    <div className="skills-container">
+                                                        {candidateData.certifications.map((cert, idx) => (
+                                                            <span key={idx} className="skill-tag">
+                                                                {cert}
+                                                                <button onClick={() => removeCert(cert)}>×</button>
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Experience & Projects</label>
+                                                    <textarea 
+                                                        rows="4"
+                                                        value={candidateData.experience}
+                                                        onChange={(e) => setCandidateData({...candidateData, experience: e.target.value})}
+                                                        placeholder="Describe your relevant projects, internships, or work experience..."
+                                                    />
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>LinkedIn Profile</label>
+                                                        <input 
+                                                            type="url"
+                                                            value={candidateData.linkedin}
+                                                            onChange={(e) => setCandidateData({...candidateData, linkedin: e.target.value})}
+                                                            placeholder="linkedin.com/in/yourprofile"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>GitHub Profile</label>
+                                                        <input 
+                                                            type="url"
+                                                            value={candidateData.github}
+                                                            onChange={(e) => setCandidateData({...candidateData, github: e.target.value})}
+                                                            placeholder="github.com/yourusername"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Portfolio Website</label>
+                                                        <input 
+                                                            type="url"
+                                                            value={candidateData.portfolio}
+                                                            onChange={(e) => setCandidateData({...candidateData, portfolio: e.target.value})}
+                                                            placeholder="yourportfolio.com"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <button 
+                                                    className="btn btn-primary"
+                                                    style={{marginTop: '2rem'}}
+                                                    onClick={getRecommendations}
+                                                    disabled={!isFormValid()}
+                                                >
+                                                    🔍 Find Matching Internships
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <div className="profile-section">
+                                                <div className="section-header">
+                                                    <h2 className="section-title">Post Internship Opportunity</h2>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Company Name *</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.company}
+                                                            onChange={(e) => setInternshipData({...internshipData, company: e.target.value})}
+                                                            placeholder="Your company name"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Job Role *</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.role}
+                                                            onChange={(e) => setInternshipData({...internshipData, role: e.target.value})}
+                                                            placeholder="e.g., Product Management Intern"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Location *</label>
+                                                        <select 
+                                                            value={internshipData.location}
+                                                            onChange={(e) => setInternshipData({...internshipData, location: e.target.value})}
+                                                        >
+                                                            <option value="">Select location</option>
+                                                            <option value="Bangalore, Karnataka">Bangalore, Karnataka</option>
+                                                            <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
+                                                            <option value="Delhi, NCR">Delhi, NCR</option>
+                                                            <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
+                                                            <option value="Pune, Maharashtra">Pune, Maharashtra</option>
+                                                            <option value="Chennai, Tamil Nadu">Chennai, Tamil Nadu</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Duration</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.duration}
+                                                            onChange={(e) => setInternshipData({...internshipData, duration: e.target.value})}
+                                                            placeholder="e.g., 3 months, 6 months"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Stipend (₹/month)</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.stipend}
+                                                            onChange={(e) => setInternshipData({...internshipData, stipend: e.target.value})}
+                                                            placeholder="e.g., ₹30,000/month"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Number of Openings</label>
+                                                        <input 
+                                                            type="number"
+                                                            value={internshipData.openings}
+                                                            onChange={(e) => setInternshipData({...internshipData, openings: e.target.value})}
+                                                            placeholder="e.g., 3"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Application Deadline</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.deadline}
+                                                            onChange={(e) => setInternshipData({...internshipData, deadline: e.target.value})}
+                                                            placeholder="e.g., 15 days, 30 days"
+                                                        />
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Work Mode</label>
+                                                        <select 
+                                                            value={internshipData.workMode}
+                                                            onChange={(e) => setInternshipData({...internshipData, workMode: e.target.value})}
+                                                        >
+                                                            <option value="">Select work mode</option>
+                                                            <option value="Office">Office</option>
+                                                            <option value="Remote">Remote</option>
+                                                            <option value="Hybrid">Hybrid</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-grid">
+                                                    <div className="form-group">
+                                                        <label>Company Size</label>
+                                                        <select 
+                                                            value={internshipData.companySize}
+                                                            onChange={(e) => setInternshipData({...internshipData, companySize: e.target.value})}
+                                                        >
+                                                            <option value="">Select company size</option>
+                                                            <option value="Startup (1-50)">Startup (1-50)</option>
+                                                            <option value="Mid-size (50-500)">Mid-size (50-500)</option>
+                                                            <option value="Large (500+)">Large (500+)</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <label>Industry</label>
+                                                        <input 
+                                                            type="text"
+                                                            value={internshipData.industry}
+                                                            onChange={(e) => setInternshipData({...internshipData, industry: e.target.value})}
+                                                            placeholder="e.g., SaaS, Fintech, EdTech"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Required Skills * (Press Enter to add)</label>
+                                                    <input 
+                                                        type="text"
+                                                        value={currentSkill}
+                                                        onChange={(e) => setCurrentSkill(e.target.value)}
+                                                        onKeyPress={(e) => handleSkillAdd(e, 'company')}
+                                                        placeholder="Type a skill and press Enter"
+                                                    />
+                                                    <div className="skills-container">
+                                                        {internshipData.requiredSkills.map((skill, idx) => (
+                                                            <span key={idx} className="skill-tag">
+                                                                {skill}
+                                                                <button onClick={() => removeSkill(skill, 'company')}>×</button>
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Benefits & Perks (Press Enter to add)</label>
+                                                    <input 
+                                                        type="text"
+                                                        value={currentBenefit}
+                                                        onChange={(e) => setCurrentBenefit(e.target.value)}
+                                                        onKeyPress={handleBenefitAdd}
+                                                        placeholder="Type a benefit and press Enter"
+                                                    />
+                                                    <div className="skills-container">
+                                                        {internshipData.benefits.map((benefit, idx) => (
+                                                            <span key={idx} className="skill-tag">
+                                                                {benefit}
+                                                                <button onClick={() => removeBenefit(benefit)}>×</button>
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Job Description *</label>
+                                                    <textarea 
+                                                        rows="5"
+                                                        value={internshipData.description}
+                                                        onChange={(e) => setInternshipData({...internshipData, description: e.target.value})}
+                                                        placeholder="Describe the role, responsibilities, and what the intern will work on..."
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Interview Process</label>
+                                                    <textarea 
+                                                        rows="3"
+                                                        value={internshipData.interviewProcess}
+                                                        onChange={(e) => setInternshipData({...internshipData, interviewProcess: e.target.value})}
+                                                        placeholder="e.g., Resume Screening → Assignment → 2 Rounds Interview"
+                                                    />
+                                                </div>
+
+                                                <div className="form-group">
+                                                    <label>Mentorship Details</label>
+                                                    <textarea 
+                                                        rows="2"
+                                                        value={internshipData.mentorship}
+                                                        onChange={(e) => setInternshipData({...internshipData, mentorship: e.target.value})}
+                                                        placeholder="Describe mentorship opportunities, e.g., Weekly 1:1 with Senior PM"
+                                                    />
+                                                </div>
+
+                                                <button 
+                                                    className="btn btn-primary"
+                                                    style={{marginTop: '2rem'}}
+                                                    onClick={getRecommendations}
+                                                    disabled={!isFormValid()}
+                                                >
+                                                    🔍 Find Matching Candidates
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+
+                            {activeTab === 'recommendations' && (
+                                <>
+                                    {!loading && recommendations.length > 0 && (
+                                        <div className="filters-section">
+                                            <h3 style={{marginBottom: '1rem', fontWeight: '600'}}>Filter & Sort Results</h3>
+                                            <div className="filters-grid">
+                                                <div className="form-group">
+                                                    <label>Location</label>
+                                                    <select 
+                                                        value={filters.location}
+                                                        onChange={(e) => {
+                                                            setFilters({...filters, location: e.target.value});
+                                                            getRecommendations();
+                                                        }}
+                                                    >
+                                                        <option value="">All Locations</option>
+                                                        <option value="Bangalore">Bangalore</option>
+                                                        <option value="Mumbai">Mumbai</option>
+                                                        <option value="Delhi">Delhi</option>
+                                                        <option value="Hyderabad">Hyderabad</option>
+                                                        <option value="Pune">Pune</option>
+                                                    </select>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>Work Mode</label>
+                                                    <select 
+                                                        value={filters.workMode}
+                                                        onChange={(e) => {
+                                                            setFilters({...filters, workMode: e.target.value});
+                                                            getRecommendations();
+                                                        }}
+                                                    >
+                                                        <option value="">All Modes</option>
+                                                        <option value="Office">Office</option>
+                                                        <option value="Remote">Remote</option>
+                                                        <option value="Hybrid">Hybrid</option>
+                                                    </select>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label>Sort By</label>
+                                                    <select 
+                                                        value={filters.sortBy}
+                                                        onChange={(e) => {
+                                                            setFilters({...filters, sortBy: e.target.value});
+                                                            getRecommendations();
+                                                        }}
+                                                    >
+                                                        <option value="matchScore">Best Match</option>
+                                                        {userType === 'candidate' && <option value="stipend">Highest Stipend</option>}
+                                                        {userType === 'candidate' && <option value="deadline">Deadline (Urgent)</option>}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {loading && (
+                                        <div className="loading">
+                                            <div className="spinner"></div>
+                                            <p>Finding the best matches for you...</p>
+                                        </div>
+                                    )}
+
+                                    {!loading && recommendations.length > 0 && (
+                                        <div className="profile-section">
+                                            <div className="section-header">
+                                                <h2 className="section-title">
+                                                    {userType === 'candidate' ? 'Recommended Internships' : 'Recommended Candidates'}
+                                                </h2>
+                                                <span style={{color: '#666'}}>{recommendations.length} results found</span>
+                                            </div>
+                                            
+                                            <div className="recommendations-grid">
+                                                {recommendations.map((item, idx) => (
+                                                    <div key={idx} className="recommendation-card">
+                                                        <div className="card-header-row">
+                                                            <div>
+                                                                <h3 className="card-title">
+                                                                    {userType === 'candidate' ? (
+                                                                        <>{item.logo} {item.role}</>
+                                                                    ) : (
+                                                                        <>{item.name}</>
+                                                                    )}
+                                                                </h3>
+                                                                <p className="card-subtitle">
+                                                                    {userType === 'candidate' ? item.company : item.education}
+                                                                </p>
+                                                            </div>
+                                                            <div className="match-badge">{item.matchScore}% Match</div>
+                                                        </div>
+
+                                                        <div className="card-details">
+                                                            <div className="detail-item">
+                                                                <span>📍</span>
+                                                                <span>{item.location}</span>
+                                                            </div>
+                                                            {userType === 'candidate' ? (
+                                                                <>
+                                                                    <div className="detail-item">
+                                                                        <span>⏱️</span>
+                                                                        <span>{item.duration}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>💰</span>
+                                                                        <span>{item.stipend}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>👥</span>
+                                                                        <span>{item.openings} openings</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>📅</span>
+                                                                        <span>Apply by {item.deadline}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>🏢</span>
+                                                                        <span>{item.workMode}</span>
+                                                                    </div>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <div className="detail-item">
+                                                                        <span>📧</span>
+                                                                        <span>{item.email}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>📱</span>
+                                                                        <span>{item.phone}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>📊</span>
+                                                                        <span>Score: {item.resumeScore}%</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>🏢</span>
+                                                                        <span>{item.workMode}</span>
+                                                                    </div>
+                                                                    <div className="detail-item">
+                                                                        <span>📅</span>
+                                                                        <span>{item.availability}</span>
+                                                                    </div>
+                                                                </>
+                                                            )}
+                                                        </div>
+
+                                                        <p style={{margin: '1rem 0', color: '#555', lineHeight: '1.6'}}>
+                                                            {userType === 'candidate' ? item.description : item.experience}
+                                                        </p>
+
+                                                        {userType === 'candidate' && item.benefits && item.benefits.length > 0 && (
+                                                            <div style={{marginBottom: '1rem'}}>
+                                                                <div className="matched-skills-title">🎁 Benefits & Perks:</div>
+                                                                <div>
+                                                                    {item.benefits.map((benefit, bidx) => (
+                                                                        <span key={bidx} className="matched-skill">{benefit}</span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {userType === 'company' && (
+                                                            <div style={{marginBottom: '1rem'}}>
+                                                                <div className="matched-skills-title">📜 Certifications:</div>
+                                                                <div>
+                                                                    {item.certifications.map((cert, cidx) => (
+                                                                        <span key={cidx} className="matched-skill">{cert}</span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {item.matchedSkills && item.matchedSkills.length > 0 && (
+                                                            <div className="matched-skills-section">
+                                                                <div className="matched-skills-title">✅ Matched Skills:</div>
+                                                                <div>
+                                                                    {item.matchedSkills.map((skill, sidx) => (
+                                                                        <span key={sidx} className="matched-skill">{skill}</span>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {userType === 'candidate' && (
+                                                            <div style={{marginTop: '1rem', padding: '1rem', background: 'var(--light-bg)', borderRadius: '4px'}}>
+                                                                <div style={{fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem'}}>
+                                                                    <strong>Interview Process:</strong> {item.interviewProcess}
+                                                                </div>
+                                                                <div style={{fontSize: '0.9rem', color: '#666'}}>
+                                                                    <strong>Mentorship:</strong> {item.mentorship}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        {userType === 'company' && (
+                                                            <div style={{marginTop: '1rem', padding: '1rem', background: 'var(--light-bg)', borderRadius: '4px'}}>
+                                                                <div style={{fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem'}}>
+                                                                    <strong>Portfolio:</strong> {item.portfolio}
+                                                                </div>
+                                                                <div style={{fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem'}}>
+                                                                    <strong>LinkedIn:</strong> {item.linkedin}
+                                                                </div>
+                                                                <div style={{fontSize: '0.9rem', color: '#666'}}>
+                                                                    <strong>GitHub:</strong> {item.github}
+                                                                </div>
+                                                            </div>
+                                                        )}
+
+                                                        <div className="card-actions">
+                                                            <button className="btn btn-primary">
+                                                                {userType === 'candidate' ? '📤 Apply Now' : '💌 Contact Candidate'}
+                                                            </button>
+                                                            <button className="btn btn-secondary">
+                                                                {userType === 'candidate' ? '🔖 Save for Later' : '⭐ Shortlist'}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {!loading && recommendations.length === 0 && (
+                                        <div className="profile-section" style={{textAlign: 'center', padding: '4rem 2rem'}}>
+                                            <div style={{fontSize: '4rem', marginBottom: '1rem'}}>🔍</div>
+                                            <h3>No recommendations yet</h3>
+                                            <p style={{color: '#666', marginTop: '0.5rem'}}>
+                                                {userType === 'candidate' 
+                                                    ? 'Complete your profile and click "Find Matching Internships" to get personalized recommendations'
+                                                    : 'Fill in the job details and click "Find Matching Candidates" to see top matches'}
+                                            </p>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="gov-footer">
+                        <div className="footer-content">
+                            <div className="footer-links">
+                                <a href="#">About Us</a>
+                                <a href="#">Contact</a>
+                                <a href="#">Terms & Conditions</a>
+                                <a href="#">Privacy Policy</a>
+                                <a href="#">Help & Support</a>
+                                <a href="#">Accessibility</a>
+                                <a href="#">Sitemap</a>
+                            </div>
+                            <p style={{marginTop: '1rem', fontSize: '0.9rem'}}>
+                                © 2026 Government of India. All Rights Reserved.<br/>
+                                Designed, Developed and Hosted by National Informatics Centre<br/>
+                                Last Updated: February 03, 2026 | Version 2.0 | Visitors: 1,45,678
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
